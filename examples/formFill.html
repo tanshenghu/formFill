@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="Keywords" content="表单根据(后端json)数据自动填充组件">
+    <meta name="Description" content="表单根据(后端json)数据自动填充组件">
+    <meta name="Author" content="TanShenghu">
+    <title>formFill</title>
+    <style>
+    *{margin:0;padding:0;}
+    ol{margin-left:50px;}
+    button{cursor:pointer;border:1px solid #ccc;border-radius:3px;padding:5px 15px;background:#f5f5f5;}
+    </style>
+    <script src="http://www.tanshenghu.com/static/js/sea.js"></script>
+    <script>
+    seajs.config({
+      paths: {
+        'tanshenghu': 'http://www.tanshenghu.com/static/js',
+        'widget': 'http://www.tanshenghu.com/widget'
+      },    
+      alias: {
+        '$': 'tanshenghu/$',
+        'formFill': 'widget/formFill/1.0.0/formFill'
+      }
+    });
+    </script>
+</head>
+<body>
+    <form>
+    <table border="1">
+        <tr>
+            <th>姓名：</th>
+            <td><div name="username"></div></td>
+            <th>性别：</th>
+            <td><label><input type="radio" name="sex" value="男"><span>男</span></label> <label><input type="radio" name="sex" value="女"><span>女</span></label></td>
+        </tr>
+        <tr>
+            <th>电话：</th>
+            <td><div name="tel"></div></td>
+            <th>QQ：</th>
+            <td><div name="QQ"></div></td>
+        </tr>
+        <tr>
+            <th>文件：</th>
+            <td colspan="3"><ol name="fileList"></ol></td>
+        </tr>
+    </table>
+    </form>
+    
+    <hr>
+    <br>
+    不带根层键名name "content"
+    <div id="odiv1">
+        姓名：<strong name="baseModel.userName"></strong> <button>取 值</button><br>
+        职业：<strong name="baseModel.job"></strong><br>
+        QQ：<strong name="QQ"></strong><br>
+        email：<strong name="email"></strong>
+    </div>
+    
+    <hr>
+    <br>
+    带根层键名name "content"
+    <div id="odiv2">
+        姓名：<input type="text" name="content.baseModel.userName"> <button>取 值</button><br>
+        职业：<input type="text" name="content.baseModel.job"><br>
+        QQ：<input type="text" name="content.QQ"><br>
+        email：<input type="text" name="content.email">
+    </div>
+    <script>
+    seajs.use(['formFill'], function( FormFill ){
+        
+            FormFill.init({
+                form: jQuery('form'), // 表单容器,非form表单div其它标签也行
+                //url: 'xxx.json', // 接口地址
+                //cite: 'content', // 对象所在的层级属性
+                param: {username:"tanshenghu", sex:"0", hello:"hello world", tel:"13588428548", QQ:"511568692", fileList:[{fileName:"tsh.jpg",filePath:"/a/tsh.jpg"},{fileName:"photo.png",filePath:"/b/photo.png"},{fileName:"pic.gif",filePath:"/c/pic.gif"}]}, // 数据
+                map: {sex:{"0":"男", "1":'女'}}, // 映射关系。有时候后端不会用明文的方式入库。最终展示给用户时又需要明文，这时就会用到key=>value的映射关系
+                isCreate: true, // 当读数据时没有检查到页面中存在此name的标签，是否自动创建，默认为false
+                fillLine: function( arr ){
+                    
+                    var $this = this;
+                    arr.forEach(function(item, i, o){
+                        $this.append( '<li title="'+item.filePath+'">'+item.fileName+'</li>' );
+                    })
+                    
+                },
+                callback: function( iscomplete ){
+                    // this => form
+                    // iscomplete => true/false 是否正常渲染完成
+                }
+            });
+            
+        
+        jQuery('#odiv1 button').on('click',function(){
+            
+            FormFill.init({
+                form: jQuery('#odiv1'),
+                depth: true, // name名称是否为"深度"键名
+                cite: 'content',
+                url: 'data.htm'
+            })
+            
+        })
+        
+        jQuery('#odiv2 button').on('click',function(){
+            
+            FormFill.init({
+                form: jQuery('#odiv2'),
+                depth: true,
+                cite: '',
+                url: 'data.htm'
+            })
+            
+        })
+        
+        
+    });
+    </script>
+</body>
+</html>

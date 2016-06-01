@@ -1,0 +1,30 @@
+{
+  "family": "widget",
+  "name": "formFill",
+  "version": "1.0.0",
+  "description": "ajax调接口，将返回过来的数据填充至对应的文本域中(对号入座)",
+  "homepage": "http://git.oschina.net/tanshenghu/myweb/tree/widget/1.0.0/formFill",
+  "author": "谭生虎",
+  "maintainers": [
+    "谭生虎 <tanshenghu@163.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://git.oschina.net/tanshenghu/myweb/tree/widget/1.0.0/formFill.git"
+  },
+  "bugs": {
+    "url": "http://git.oschina.net/tanshenghu/myweb/tree/widget/1.0.0/formFill/issues"
+  },
+  "keywords": [],
+  "licenses": "tsh_worker",
+  "spm": {
+    "output": [
+      "formFill.js"
+    ],
+    "alias": {
+      "$" : "$"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}
