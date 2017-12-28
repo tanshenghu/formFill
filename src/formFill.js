@@ -60,6 +60,7 @@ define(function(require, exports, module){
                     case 'url': ele.val( dataval ); break;
                     case 'email': ele.val( dataval ); break;
                     case 'tel': ele.val( dataval ); break;
+                    case 'number': ele.val( dataval ); break;
                     case 'textarea': ele.val( dataval ); break;
                     case 'checkbox': ele.filter('[value="'+dataval+'"]').prop('checked', true); break; // 单个值走这里，如果checkbox是array就会走下面语句
                     case 'radio': ele.filter('[value="'+dataval+'"]').prop('checked', true); break;
