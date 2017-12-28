@@ -133,7 +133,7 @@ define(function(require, exports, module){
                 }
             }
             
-            typeof this.callback === 'function' && this.callback.apply( this.form,[iscomplete] );
+            typeof this.callback === 'function' && this.callback.apply( this.form,[data, iscomplete] );
             
         }
         
